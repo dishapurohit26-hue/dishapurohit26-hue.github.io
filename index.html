@@ -692,6 +692,109 @@
           align-items: flex-start;
         }
       }
+/* AI Assistant */
+.assistant-toggle {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 1200;
+  width: 60px;
+  height: 60px;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  color: #08111d;
+  font-weight: 800;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 18px 40px rgba(34, 211, 238, 0.35);
+}
+
+.assistant-panel {
+  position: fixed;
+  right: 22px;
+  bottom: 96px;
+  width: min(360px, calc(100vw - 24px));
+  max-height: 70vh;
+  background: rgba(10, 14, 27, 0.9);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 28px 60px rgba(0,0,0,0.38);
+  display: none;
+  overflow: hidden;
+  z-index: 1199;
+}
+
+.assistant-panel.open {
+  display: block;
+}
+
+.assistant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+  font-weight: 700;
+}
+
+.assistant-body {
+  padding: 16px;
+  max-height: 50vh;
+  overflow-y: auto;
+  background: rgba(5, 6, 15, 0.8);
+}
+
+.assistant-msg {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  line-height: 1.5;
+  font-size: 0.92rem;
+}
+
+.assistant-msg.bot {
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  color: var(--text);
+}
+
+.assistant-msg.user {
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  color: var(--text);
+  margin-left: 24px;
+}
+
+.assistant-input-wrap {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px 14px;
+  border-top: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+}
+
+.assistant-input-wrap input {
+  flex: 1;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+}
+
+.assistant-input-wrap button {
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  color: #08111d;
+  font-weight: 700;
+  padding: 10px 14px;
+  cursor: pointer;
+}
     </style>
   </head>
   <body>
