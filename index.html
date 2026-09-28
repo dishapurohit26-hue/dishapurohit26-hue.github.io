@@ -159,6 +159,36 @@ main,footer{position:relative;z-index:1}
 .arch-actions{margin-top:16px}
 @media (max-width:760px){.arch-flow{flex-direction:column}.arch-link{flex:0 0 36px;width:2px;height:auto;min-height:36px;align-self:center}.arch-link.lit{background:linear-gradient(180deg,var(--cyan),var(--violet))}.arch-link i{left:-3px;top:0;animation-name:archDotV}}
 @media (prefers-reduced-motion:reduce){.arch-link i{animation:none}}
+/* Matrix / glitch mode */
+body.matrix{--bg:#000;--bg-2:#00140a;--bg-3:#000d06;--border:rgba(0,255,156,.22);--text:#d8ffe9;--muted:#7fd6a5;--cyan:#00ff9c;--violet:#00c46a;--pink:#8dffc4;--green:#00ff9c;background:#000;font-family:"Courier New",Courier,monospace}
+body.matrix #bgNet{opacity:0}
+body.matrix h1,body.matrix h2,body.matrix h3{text-shadow:0 0 12px rgba(0,255,156,.55)}
+body.matrix .btn-primary,body.matrix .assistant-toggle{color:#00140a}
+#matrixCv{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.4}
+body.glitch::after,body.matrix::after{content:"";position:fixed;inset:0;z-index:2700;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,255,156,.07) 0 2px,transparent 2px 4px)}
+body.glitch::after{background:repeating-linear-gradient(0deg,rgba(0,255,156,.16) 0 2px,transparent 2px 4px);animation:glFlash .12s steps(2) infinite}
+@keyframes glFlash{50%{opacity:.35;transform:translateY(3px)}}
+body.glitch main,body.glitch header{animation:glShake .12s steps(2) infinite}
+@keyframes glShake{0%{transform:translate(0,0) skewX(0)}25%{transform:translate(-6px,2px) skewX(2deg)}50%{transform:translate(5px,-3px) skewX(-3deg)}75%{transform:translate(-3px,-2px)}100%{transform:translate(4px,3px) skewX(1deg)}}
+body.glitch h1,body.glitch h2,body.glitch h3{text-shadow:3px 0 #f0f,-3px 0 #0ff}
+.matrix-exit{position:fixed;left:16px;bottom:16px;z-index:2800;border:1px solid rgba(0,255,156,.6);background:rgba(0,20,10,.9);color:#00ff9c;border-radius:999px;padding:.55rem 1rem;font:inherit;font-family:"Courier New",monospace;font-size:.85rem;cursor:pointer;box-shadow:0 0 24px rgba(0,255,156,.3)}
+@media (prefers-reduced-motion:reduce){body.glitch main,body.glitch header,body.glitch::after{animation:none}}
+/* DP mascot + party */
+.badge{cursor:pointer;padding:14px;transition:border-color .3s,box-shadow .3s}
+.badge:hover{border-color:rgba(34,211,238,.6);box-shadow:0 0 30px rgba(34,211,238,.25)}
+.badge svg{width:100%;height:100%;overflow:visible}
+.dp-eyes{transform-box:fill-box;transform-origin:center;animation:dpBlink 5s infinite}
+@keyframes dpBlink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.08)}}
+.dp-smile{transform-box:fill-box;transform-origin:center}
+.badge.talk .dp-smile{animation:dpTalk .18s infinite alternate}
+@keyframes dpTalk{to{transform:scaleY(1.7)}}
+.dp-say{margin:14px auto 0;max-width:260px;padding:.6rem .9rem;border-radius:14px;border:1px solid rgba(34,211,238,.35);background:rgba(34,211,238,.07);color:var(--text);font-size:.88rem;text-align:center;line-height:1.45}
+.dp-say.pop{animation:dpPop .35s ease}
+@keyframes dpPop{from{transform:scale(.9);opacity:.4}to{transform:none;opacity:1}}
+.party .badge{animation:dpBounce .45s ease-in-out infinite alternate;border-color:var(--pink)}
+@keyframes dpBounce{to{transform:translateY(-10px) rotate(4deg)}}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);z-index:2600;padding:.7rem 1.1rem;border-radius:999px;border:1px solid var(--border);background:rgba(13,18,40,.96);color:var(--text);font-size:.9rem;box-shadow:0 20px 50px rgba(0,0,0,.5);max-width:calc(100vw - 24px);text-align:center}
+@media (prefers-reduced-motion:reduce){.dp-eyes,.badge.talk .dp-smile,.party .badge,.dp-say.pop{animation:none}}
 /* Command palette */
 .cmd-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--muted);border-radius:10px;padding:.4rem .7rem;font:inherit;font-size:.85rem;cursor:pointer;transition:border-color .2s,color .2s}
 .cmd-btn:hover{color:var(--text);border-color:rgba(34,211,238,.5)}
@@ -272,7 +302,18 @@ kbd{font:inherit;font-size:.72rem;padding:.1rem .4rem;border:1px solid var(--bor
       </div>
       <aside class="profile-card reveal" aria-label="Profile card">
         <div class="profile-content">
-          <div class="portrait"><div class="badge">DP</div></div>
+          <div class="portrait"><div class="badge" id="dpBadge" role="button" tabindex="0" aria-label="Meet DP, the site mascot. Click to chat.">
+                  <svg viewBox="0 0 100 100" aria-hidden="true">
+                    <g class="dp-eyes">
+                      <circle class="dp-eye" cx="35" cy="42" r="12" fill="#eef4ff"/><circle class="dp-pupil" cx="35" cy="42" r="5.5" fill="#05060f"/>
+                      <circle class="dp-eye" cx="65" cy="42" r="12" fill="#eef4ff"/><circle class="dp-pupil" cx="65" cy="42" r="5.5" fill="#05060f"/>
+                    </g>
+                    <circle cx="22" cy="62" r="5" fill="#f472b6" opacity=".35"/><circle cx="78" cy="62" r="5" fill="#f472b6" opacity=".35"/>
+                    <path class="dp-smile" d="M38 64 Q50 77 62 64" stroke="#22d3ee" stroke-width="4" fill="none" stroke-linecap="round"/>
+                    <text x="50" y="90" font-size="8" font-weight="700" text-anchor="middle" fill="#22d3ee" font-family="Arial">DP</text>
+                  </svg>
+                </div></div>
+              <div class="dp-say" id="dpSay" aria-live="polite">Hi, I’m DP! Click me.</div>
           <div class="profile-meta">
             <div><span>Specialization</span><strong>AI &amp; Data Science</strong></div>
             <div><span>Focus</span><strong>ML • Analytics • Insights</strong></div>
@@ -864,6 +905,165 @@ if ("IntersectionObserver" in window) {
   randomData();
 })();
 
+/* DP mascot + party mode */
+(function () {
+  const badge = document.getElementById("dpBadge");
+  const say = document.getElementById("dpSay");
+  const pupils = badge.querySelectorAll(".dp-pupil");
+  const eyes = badge.querySelectorAll(".dp-eye");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const lines = [
+    "I’m DP, this site’s mascot. Disha does the real work.",
+    "Fun fact: I run on 100% curiosity and 0% coffee.",
+    "Psst… press Ctrl+K. It’s my favorite shortcut.",
+    "Disha trains the models. I just look cute.",
+    "Bug? No, that’s a feature.",
+    "Try the Konami code: ↑ ↑ ↓ ↓ ← → ← → B A",
+    "Click me a few more times. Something might happen…",
+    "Ask the AI bubble in the corner about Disha. It knows things.",
+    "Type the word matrix anywhere on the page. Trust me."
+  ];
+  let last = -1, clicks = 0, talkT;
+
+  function speak(t) {
+    say.textContent = t;
+    say.classList.remove("pop"); void say.offsetWidth; say.classList.add("pop");
+    badge.classList.add("talk"); clearTimeout(talkT);
+    talkT = setTimeout(() => badge.classList.remove("talk"), 1100);
+  }
+  function toast(t) {
+    const el = document.createElement("div");
+    el.className = "toast"; el.textContent = t; document.body.appendChild(el);
+    setTimeout(() => el.remove(), 3200);
+  }
+  function confetti() {
+    if (reduce) return;
+    const c = document.createElement("canvas");
+    c.style.cssText = "position:fixed;inset:0;width:100%;height:100%;z-index:2000;pointer-events:none";
+    document.body.appendChild(c);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2), W = innerWidth, H = innerHeight;
+    c.width = W * dpr; c.height = H * dpr;
+    const x = c.getContext("2d"); x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const cols = ["#22d3ee", "#8b5cf6", "#f472b6", "#fbbf24", "#7dd3a8", "#ffffff"];
+    const ps = Array.from({ length: 160 }, () => ({ x: Math.random() * W, y: -20 - Math.random() * H * 0.6, vx: (Math.random() - 0.5) * 3, vy: 2 + Math.random() * 4, s: 5 + Math.random() * 6, r: Math.random() * 6, vr: (Math.random() - 0.5) * 0.3, c: cols[(Math.random() * cols.length) | 0] }));
+    const t0 = performance.now();
+    (function loop(t) {
+      x.clearRect(0, 0, W, H);
+      ps.forEach((p) => { p.x += p.vx; p.y += p.vy; p.r += p.vr; p.vy += 0.03; x.save(); x.translate(p.x, p.y); x.rotate(p.r); x.fillStyle = p.c; x.fillRect(-p.s / 2, -p.s / 3, p.s, p.s * 0.6); x.restore(); });
+      if (t - t0 < 4500) requestAnimationFrame(loop); else c.remove();
+    })(t0);
+  }
+  function party() {
+    confetti();
+    document.body.classList.add("party");
+    speak("PARTY MODE! You found the secret. Disha owes you a high five.");
+    toast("🎉 Party mode unlocked!");
+    setTimeout(() => document.body.classList.remove("party"), 6000);
+  }
+  window.dpParty = party;
+
+  function hello() {
+    let i; do { i = (Math.random() * lines.length) | 0; } while (i === last);
+    last = i; speak(lines[i]);
+    if (++clicks >= 7) { clicks = 0; party(); }
+  }
+  badge.addEventListener("click", hello);
+  badge.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); hello(); } });
+
+  window.addEventListener("pointermove", (e) => {
+    eyes.forEach((eye, i) => {
+      const r = eye.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      const a = Math.atan2(e.clientY - cy, e.clientX - cx), d = Math.min(4.5, Math.hypot(e.clientX - cx, e.clientY - cy) / 40);
+      pupils[i].setAttribute("transform", "translate(" + (Math.cos(a) * d).toFixed(2) + " " + (Math.sin(a) * d).toFixed(2) + ")");
+    });
+  });
+
+  const code = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+  let pos = 0;
+  document.addEventListener("keydown", (e) => {
+    const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    pos = k === code[pos] ? pos + 1 : k === code[0] ? 1 : 0;
+    if (pos === code.length) { pos = 0; party(); }
+  });
+})();
+
+/* Matrix / glitch mode */
+(function () {
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789<>/{}=+*#$%";
+  const FS = 16;
+  let on = false, cv, ctx, raf = 0, drops = [], W = 0, H = 0, last = 0, exitBtn, t1;
+
+  function toast(t) {
+    const el = document.createElement("div");
+    el.className = "toast"; el.textContent = t; document.body.appendChild(el);
+    setTimeout(() => el.remove(), 3200);
+  }
+  function size() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = "#000"; ctx.fillRect(0, 0, W, H);
+    drops = Array.from({ length: Math.ceil(W / FS) }, () => Math.random() * -40);
+  }
+  function frame(t) {
+    raf = requestAnimationFrame(frame);
+    if (t - last < 45) return;
+    last = t;
+    ctx.fillStyle = "rgba(0,0,0,.09)"; ctx.fillRect(0, 0, W, H);
+    ctx.font = FS + "px monospace";
+    for (let i = 0; i < drops.length; i++) {
+      const y = drops[i] * FS;
+      ctx.fillStyle = Math.random() < 0.03 ? "#eafff5" : "#00ff9c";
+      ctx.fillText(chars[(Math.random() * chars.length) | 0], i * FS, y);
+      if (y > H && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+  }
+  function enable() {
+    if (on || document.body.classList.contains("booting")) return;
+    on = true;
+    if (!reduce) document.body.classList.add("glitch");
+    t1 = setTimeout(() => {
+      document.body.classList.remove("glitch");
+      document.body.classList.add("matrix");
+      if (!reduce) {
+        cv = document.createElement("canvas"); cv.id = "matrixCv"; cv.setAttribute("aria-hidden", "true");
+        document.body.appendChild(cv); ctx = cv.getContext("2d"); size();
+        raf = requestAnimationFrame(frame);
+      }
+      exitBtn = document.createElement("button");
+      exitBtn.className = "matrix-exit"; exitBtn.type = "button"; exitBtn.textContent = "> exit_matrix()";
+      exitBtn.addEventListener("click", disable); document.body.appendChild(exitBtn);
+      toast("Reality.exe has stopped responding.");
+    }, reduce ? 0 : 1200);
+  }
+  function disable() {
+    if (!on) return;
+    on = false; clearTimeout(t1); cancelAnimationFrame(raf);
+    document.body.classList.remove("glitch", "matrix");
+    if (cv) { cv.remove(); cv = null; }
+    if (exitBtn) { exitBtn.remove(); exitBtn = null; }
+    toast("Back to reality. Everything looks… normal?");
+  }
+  window.matrixMode = () => (on ? disable() : enable());
+  window.addEventListener("resize", () => { if (cv) size(); });
+  document.addEventListener("visibilitychange", () => {
+    if (!cv) return;
+    if (document.hidden) cancelAnimationFrame(raf); else raf = requestAnimationFrame(frame);
+  });
+
+  const word = "matrix"; let pos = 0;
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && on) { disable(); return; }
+    if (e.target.closest && e.target.closest("input, textarea")) { pos = 0; return; }
+    if (e.ctrlKey || e.metaKey || e.altKey || e.key.length !== 1) return;
+    pos = e.key.toLowerCase() === word[pos] ? pos + 1 : e.key.toLowerCase() === word[0] ? 1 : 0;
+    if (pos === word.length) { pos = 0; window.matrixMode(); }
+  });
+})();
+
 /* Command palette */
 (function () {
   const box = document.getElementById("cmd");
@@ -890,6 +1090,8 @@ if ("IntersectionObserver" in window) {
     { label: "Send an email", kw: "mail contact", type: "Action", run: link("mailto:dishapurohit26@gmail.com") },
     { label: "Open LinkedIn", kw: "social", type: "Link", run: link("https://www.linkedin.com/in/disha-purohit-380542290", true) },
     { label: "Open GitHub", kw: "code social", type: "Link", run: link("https://github.com/dishapurohit26-hue", true) },
+    { label: "Matrix mode", kw: "matrix glitch hacker green code rain fun", type: "Fun", run: () => window.matrixMode && window.matrixMode() },
+    { label: "Party mode", kw: "confetti easter egg fun mascot dp", type: "Fun", run: () => window.dpParty && window.dpParty() },
     { label: "Ask the AI assistant", kw: "chat help bot", type: "Action", run: () => setTimeout(() => setPanel(true), 150) }
   ];
   let shown = [], idx = 0, lastFocus = null;
