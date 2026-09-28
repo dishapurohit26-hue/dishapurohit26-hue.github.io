@@ -1116,6 +1116,23 @@
       });
 
       revealItems.forEach((item) => observer.observe(item));
+<button class="assistant-toggle" id="assistantToggle" aria-label="Open assistant">AI</button>
+
+<div class="assistant-panel" id="assistantPanel">
+  <div class="assistant-header">
+    <span>Disha AI</span>
+    <button id="assistantClose" class="btn btn-secondary" style="padding: 6px 10px; min-height: 0; font-size: 0.8rem;">Close</button>
+  </div>
+  <div class="assistant-body" id="assistantBody">
+    <div class="assistant-msg bot">
+      Hi! I’m Disha’s portfolio assistant. Ask me about her skills, projects, or focus areas.
+    </div>
+  </div>
+  <div class="assistant-input-wrap">
+    <input id="assistantInput" type="text" placeholder="Ask about skills, projects..." />
+    <button id="assistantSend">Send</button>
+  </div>
+</div>
     </script>
   </body>
 </html>
